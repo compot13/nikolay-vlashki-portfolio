@@ -1,1316 +1,452 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nikolay Vlashki — Full-Stack & Blockchain Developer</title>
+<meta name="description" content="Nikolay Vlashki — Full-Stack & Blockchain Developer based in Sofia. Smart contracts, web applications and on-chain risk intelligence.">
+<meta name="theme-color" content="#16304f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: a screen-printed poster. Navy frame with green side bands, flat color panels with thick ink outlines,
+   one slanted display face doing the shouting, halftone dots for texture. */
+:root{
+  color-scheme:light;
+  --ink:#16304f; --ink-2:#22436b; --green:#3f9b6b; --orange:#e2552d; --yellow:#f2c84b; --pink:#f3a9b8; --sky:#a8d3f0; --paper:#f7f0e1; --paper-2:#efe5cf;
+  --muted:#4d6077;
+  --display:'Archivo Black','Arial Black',Impact,sans-serif; --sans:'Work Sans',system-ui,-apple-system,Segoe UI,sans-serif; --mono:'DM Mono',ui-monospace,monospace;
+  --line:3px solid var(--ink); --gut:clamp(16px,4vw,40px); --max:1220px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:90px}
+body{background:var(--ink);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:300;background:var(--yellow);padding:8px 12px}
 
-    <title>Nikolay Vlashki — Blockchain & Full-Stack Development</title>
+/* poster frame: green bands at the sides */
+.frame{max-width:calc(var(--max) + 2*var(--gut));margin:0 auto;padding-inline:var(--gut);position:relative}
+.bands{position:fixed;inset:0;pointer-events:none;z-index:0;background:linear-gradient(90deg,var(--green) 0 18px,transparent 18px calc(100% - 18px),var(--green) calc(100% - 18px))}
+@media (max-width:700px){.bands{background:linear-gradient(90deg,var(--green) 0 6px,transparent 6px calc(100% - 6px),var(--green) calc(100% - 6px))}}
+main,header.top,footer{position:relative;z-index:1}
 
-    <meta
-        name="description"
-        content="Nikolay Vlashki — Blockchain & Full-Stack Developer with expertise in smart contracts, decentralized applications, and modern web technologies."
-    >
+/* halftone texture */
+.dots{background-image:radial-gradient(rgba(22,48,79,.22) 1.2px,transparent 1.6px);background-size:9px 9px}
+.dots-light{background-image:radial-gradient(rgba(247,240,225,.35) 1.2px,transparent 1.6px);background-size:9px 9px}
 
-    <link rel="stylesheet" href="style.css">
+/* ---------- nav ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--ink);border-bottom:3px solid var(--green)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:70px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--paper)}
+.logo b{font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:.02em;transform:skewX(-8deg);display:inline-block}
+.logo b span{color:var(--orange)}
+.links{display:flex;gap:6px}
+.links a{color:var(--paper);font-weight:600;font-size:14.5px;padding:8px 12px;border-radius:999px;transition:background .2s,color .2s}
+.links a:hover{background:var(--yellow);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 20px;border:var(--line);border-radius:999px;font-weight:700;font-size:15px;white-space:nowrap;transition:transform .15s,box-shadow .15s}
+.btn svg{flex:none}
+.btn-orange{background:var(--orange);color:var(--paper);box-shadow:4px 4px 0 var(--ink)}
+.btn-yellow{background:var(--yellow);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn-paper{background:var(--paper);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.top .btn{border-color:var(--paper);box-shadow:4px 4px 0 var(--green)}
+.menu-btn{display:none;width:46px;height:46px;border-radius:50%;border:3px solid var(--paper);background:var(--yellow);color:var(--ink);cursor:pointer;align-items:center;justify-content:center}
+.menu-btn i,.menu-btn i:before,.menu-btn i:after{display:block;width:18px;height:2.5px;background:currentColor;position:relative;transition:.25s}
+.menu-btn i:before,.menu-btn i:after{content:"";position:absolute;left:0}
+.menu-btn i:before{top:-6px}.menu-btn i:after{top:6px}
+.menu-open .menu-btn i{background:transparent}.menu-open .menu-btn i:before{top:0;transform:rotate(45deg)}.menu-open .menu-btn i:after{top:0;transform:rotate(-45deg)}
+.drawer{display:none}
+
+/* ---------- hero poster ---------- */
+.hero{padding-block:clamp(24px,4vw,44px) clamp(40px,6vw,72px)}
+.poster{display:grid;grid-template-columns:5fr 7fr;grid-template-rows:auto auto;gap:clamp(12px,1.6vw,20px)}
+.panel{position:relative;border:var(--line);border-radius:6px;overflow:hidden;background:var(--paper)}
+.p-a{grid-column:1;grid-row:1;background:var(--sky);min-height:300px}
+.p-c{grid-column:1;grid-row:2;background:var(--ink-2);min-height:300px}
+.p-b{grid-column:2;grid-row:1/3;min-height:620px;background:var(--green)}
+.panel svg.art{position:absolute;inset:0;width:100%;height:100%}
+.band{position:absolute;left:-10%;right:-10%;top:50%;height:clamp(110px,15vw,170px);transform:translateY(-50%) rotate(-24deg);background:var(--ink);display:flex;align-items:center;justify-content:center;border-block:3px solid var(--ink)}
+.band span{font-family:var(--display);font-size:clamp(46px,6.6vw,96px);line-height:1;color:var(--orange);letter-spacing:.01em;transform:skewX(-12deg);white-space:nowrap;text-shadow:3px 3px 0 #0e2138}
+.p-b .lower{position:absolute;inset:0;background:var(--yellow);clip-path:polygon(0 100%,0 82%,100% 22%,100% 100%)}
+.caption{position:absolute;left:14px;bottom:12px;background:var(--paper);border:var(--line);border-radius:999px;padding:4px 12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;z-index:2}
+.p-b .caption{left:auto;right:14px;bottom:14px}
+.p-b .caption.top{top:14px;bottom:auto;left:auto;right:14px}
+.signs{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-around;padding:20px 18px 40px}
+.sign{writing-mode:vertical-rl;text-orientation:upright;font-family:var(--display);font-size:clamp(15px,1.5vw,19px);letter-spacing:.06em;padding:12px 7px;border:var(--line);border-radius:4px;line-height:1}
+.sign.s1{background:var(--yellow);transform:translateY(-28px)}
+.sign.s2{background:var(--orange);color:var(--paper);transform:translateY(34px)}
+.sign.s3{background:var(--pink);transform:translateY(-44px)}
+.sign.s4{background:var(--paper);transform:translateY(16px)}
+.moon{position:absolute;top:22px;left:24px;width:34px;height:34px;border-radius:50%;box-shadow:9px -4px 0 0 var(--yellow);transform:rotate(-20deg)}
+.star{position:absolute;width:4px;height:4px;background:var(--paper);border-radius:50%}
+
+.intro{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(20px,4vw,56px);align-items:end;margin-top:clamp(20px,3vw,32px);background:var(--paper);border:var(--line);border-radius:6px;padding:clamp(22px,3.5vw,40px)}
+.kicker{display:inline-flex;align-items:center;gap:8px;background:var(--yellow);border:var(--line);border-radius:999px;padding:4px 12px 4px 8px;margin-bottom:16px}
+.kicker i{width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid var(--ink)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(36px,5.6vw,72px);line-height:.98;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+h1 em{font-style:normal;color:var(--orange);display:inline-block;transform:skewX(-10deg)}
+.lead{font-size:clamp(16px,1.6vw,18.5px);color:var(--muted);max-width:52ch}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+
+/* ---------- strip ---------- */
+.strip{background:var(--orange);border-block:3px solid var(--ink);overflow:hidden;position:relative;z-index:1}
+.track{display:flex;gap:28px;width:max-content;padding:14px 0;animation:scroll 42s linear infinite}
+.track span{font-family:var(--display);font-size:20px;color:var(--paper);display:inline-flex;align-items:center;gap:28px;transform:skewX(-8deg);white-space:nowrap}
+.track span:after{content:"";width:14px;height:14px;border-radius:50%;background:var(--yellow);border:3px solid var(--ink)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section.sec{padding-block:clamp(56px,8vw,96px)}
+.sheet{background:var(--paper);border:var(--line);border-radius:6px;padding:clamp(22px,4vw,48px)}
+.sheet.alt{background:var(--paper-2)}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,4vw,48px);align-items:end;margin-bottom:clamp(28px,4vw,44px)}
+.tag{display:inline-block;background:var(--ink);color:var(--yellow);border-radius:999px;padding:4px 12px;margin-bottom:14px}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4.4vw,54px);line-height:1;text-transform:uppercase;text-wrap:balance}
+h2 em{font-style:normal;color:var(--orange);display:inline-block;transform:skewX(-10deg)}
+.sub{color:var(--muted);font-size:clamp(15.5px,1.4vw,17px);max-width:56ch}
+.card{border:var(--line);border-radius:6px;padding:24px;background:var(--paper);box-shadow:5px 5px 0 var(--ink);transition:transform .15s,box-shadow .15s;min-width:0}
+.card:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.c-sky{background:var(--sky)}.c-yellow{background:var(--yellow)}.c-pink{background:var(--pink)}.c-green{background:var(--green);color:var(--paper)}.c-orange{background:var(--orange);color:var(--paper)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card h3{font-family:var(--display);font-weight:400;font-size:21px;line-height:1.1;text-transform:uppercase;margin-top:18px}
+.card p{margin-top:8px;font-size:15px}
+.ic{width:52px;height:52px;border:var(--line);border-radius:50%;display:grid;place-items:center;background:var(--paper)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:28px}
+.stat{text-align:center;padding:22px 14px}
+.stat b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(46px,5.4vw,70px);line-height:1;transform:skewX(-8deg)}
+.stat span{display:block;margin-top:8px;font-size:14px;font-weight:600}
+
+/* project */
+.project{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(20px,4vw,44px);align-items:start}
+.project h3.name{font-family:var(--display);font-weight:400;font-size:clamp(56px,8vw,104px);line-height:.9;transform:skewX(-10deg);color:var(--orange);text-shadow:4px 4px 0 var(--ink)}
+.status{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:var(--paper);border:var(--line);border-radius:999px;padding:4px 12px}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--yellow)}
+.points{list-style:none;margin-top:20px;display:grid;gap:10px}
+.points li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px}
+.points li b{flex:none;width:28px;height:28px;border:var(--line);border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:12px;background:var(--yellow)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-family:var(--mono);font-size:12px;padding:4px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--paper)}
+.report{border:var(--line);border-radius:6px;background:var(--sky);box-shadow:6px 6px 0 var(--ink);overflow:hidden}
+.report .rh{display:flex;justify-content:space-between;gap:10px;padding:10px 16px;background:var(--ink);color:var(--paper)}
+.report .rb{padding:20px}
+.score{display:flex;align-items:center;gap:16px}
+.score .ring{width:92px;height:92px;flex:none;border-radius:50%;border:var(--line);display:grid;place-items:center;background:conic-gradient(var(--orange) 0 74%,var(--paper) 74% 100%)}
+.score .ring b{width:66px;height:66px;border-radius:50%;border:var(--line);background:var(--yellow);display:grid;place-items:center;font-family:var(--display);font-weight:400;font-size:24px}
+.dims{display:grid;gap:12px;margin-top:20px}
+.dim{display:grid;grid-template-columns:110px minmax(0,1fr) 30px;gap:12px;align-items:center;font-size:13.5px;font-weight:600}
+.dim .b{height:14px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);overflow:hidden}
+.dim .b i{display:block;height:100%;background:var(--green);border-right:2px solid var(--ink)}
+.dim .b i.hi{background:var(--orange)}
+.dim span:last-child{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.flag{margin-top:16px;background:var(--pink);border:2px solid var(--ink);border-radius:6px;padding:8px 12px;font-size:13.5px;font-weight:600}
+.more{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:3px dashed var(--ink);padding-top:20px}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.skill h3{margin-top:0}
+.skill p{font-size:14.5px}
+
+/* experience */
+.jobs{display:grid;gap:18px}
+.job{display:grid;grid-template-columns:200px minmax(0,1fr);gap:8px 28px;border:var(--line);border-radius:6px;background:var(--paper);overflow:hidden}
+.job .when{background:var(--yellow);border-right:var(--line);padding:20px;display:flex;flex-direction:column;gap:8px}
+.job .when.now{background:var(--orange);color:var(--paper)}
+.job .body{padding:20px 22px 22px 0;min-width:0}
+.job h3{font-family:var(--display);font-weight:400;font-size:clamp(19px,2.2vw,24px);line-height:1.15;text-transform:uppercase}
+.job .co{margin:6px 0 12px;color:var(--muted)}
+.job ul{list-style:none;display:grid;gap:8px}
+.job li{position:relative;padding-left:20px;font-size:15px}
+.job li:before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;border-radius:50%;background:var(--green);border:2px solid var(--ink)}
+
+/* education */
+.edu .card{display:flex;flex-direction:column;gap:6px}
+.edu .row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.pill{border:2px solid var(--ink);border-radius:999px;padding:2px 10px;background:var(--paper);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+
+/* contact */
+.contact{position:relative;overflow:hidden;background:var(--orange);border:var(--line);border-radius:6px;padding:clamp(28px,5vw,64px);color:var(--paper)}
+.contact .big{font-family:var(--display);font-size:clamp(44px,8vw,110px);line-height:.9;text-transform:uppercase;transform:skewX(-10deg);text-shadow:4px 4px 0 var(--ink);text-wrap:balance}
+.contact p{max-width:52ch;margin-top:18px;font-size:17px}
+.cc-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:14px;margin-top:28px}
+.cc{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--paper);color:var(--ink);border:var(--line);border-radius:6px;padding:14px 16px;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s;min-width:0}
+.cc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.cc div{min-width:0}
+.cc strong{display:block;font-size:15px;word-break:break-all}
+
+footer{color:var(--paper);padding-block:36px 40px}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.foot nav{display:flex;gap:16px;flex-wrap:wrap}
+.foot nav a{opacity:.85}.foot nav a:hover{color:var(--yellow);opacity:1}
+
+/* ---------- responsive ---------- */
+@media (max-width:1060px){
+  .links,.top .bar > .btn{display:none}
+  .menu-btn{display:inline-flex}
+  .drawer{display:block;position:fixed;inset:0;z-index:40;background:var(--ink);padding:96px var(--gut) 40px;opacity:0;visibility:hidden;transition:.2s;overflow-y:auto}
+  .menu-open .drawer{opacity:1;visibility:visible}
+  .menu-open{overflow:hidden}
+  .drawer a:not(.btn){display:block;font-family:var(--display);font-size:30px;color:var(--paper);padding:12px 0;border-bottom:2px solid var(--ink-2);text-transform:uppercase}
+  .drawer a:not(.btn):hover{color:var(--yellow)}
+  .drawer .btn{margin-top:24px;width:100%}
+  .skills{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .poster{grid-template-columns:1fr 1fr}
+  .p-b{grid-column:1/3;grid-row:1;min-height:0;aspect-ratio:700/620}
+  .p-a{grid-column:1;grid-row:2;min-height:240px}
+  .p-c{grid-column:2;grid-row:2;min-height:240px}
+  .intro,.head,.project{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  .job{grid-template-columns:1fr}
+  .job .when{border-right:0;border-bottom:var(--line);flex-direction:row;justify-content:space-between;flex-wrap:wrap}
+  .job .body{padding:0 20px 20px}
+  .cc-grid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .poster{grid-template-columns:1fr}
+  .p-b,.p-a,.p-c{grid-column:1;grid-row:auto}
+  .p-b{min-height:360px;aspect-ratio:auto}
+  .caption{font-size:10.5px;padding:3px 10px}
+  .p-b .caption.top{display:none}
+  .p-a,.p-c{min-height:220px}
+  .skills{grid-template-columns:1fr}
+  .stat b{font-size:46px}
+  .dim{grid-template-columns:92px minmax(0,1fr) 28px;gap:8px}
+  .ctas .btn{flex:1 1 100%}
+  .logo b{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
-
 <body>
+<a href="#main" class="skip">Skip to content</a>
+<div class="bands" aria-hidden="true"></div>
+<header class="top">
+  <div class="frame bar">
+    <a href="#home" class="logo" aria-label="Nikolay Vlashki — home">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15" fill="#f2c84b" stroke="#f7f0e1" stroke-width="3"/><path d="M10 11h4l3 9 3-9h4l-5 13h-4z" fill="#16304f"/></svg>
+      <b>NIKOLAY <span>VLASHKI</span></b></a>
+    <nav class="links" aria-label="Main"><a href="#about">About</a><a href="#argus">Projects</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#education">Education</a></nav>
+    <a href="#contact" class="btn btn-yellow">Get in touch <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><i></i></button>
+  </div>
+</header>
+<div class="drawer" id="drawer">
+  <a href="#about">About</a><a href="#argus">Projects</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#education">Education</a>
+  <a href="#contact" class="btn btn-yellow">Get in touch <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+</div>
 
-    <!-- =========================
-         BACKGROUND
-    ========================== -->
-
-    <div class="background">
-
-        <div class="grid"></div>
-
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
-        <div class="glow glow-3"></div>
-
-        <div class="scanlines"></div>
-
-        <canvas id="particles"></canvas>
-
+<main id="main">
+<section class="frame hero" id="home">
+  
+<div class="poster">
+  <div class="panel p-a dots" aria-hidden="true">
+    <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+      <circle cx="320" cy="62" r="30" fill="#f2c84b" stroke="#16304f" stroke-width="3"/>
+      <path d="M40 70c10-14 34-14 42 0 12-4 24 4 22 14H30c-4-8 2-14 10-14Z" fill="#f3a9b8" stroke="#16304f" stroke-width="3" stroke-linejoin="round"/>
+      <g stroke="#16304f" stroke-width="3" stroke-linejoin="round"><ellipse cx="108.0" cy="181.9" rx="9" ry="6" transform="rotate(-24.3 108.0 181.9)" fill="none" stroke-width="3"/><ellipse cx="132.8" cy="170.7" rx="9" ry="6" transform="rotate(-24.3 132.8 170.7)" fill="none" stroke-width="3"/><ellipse cx="157.6" cy="159.5" rx="9" ry="6" transform="rotate(-24.3 157.6 159.5)" fill="none" stroke-width="3"/><rect x="111.4" y="173.8" width="18" height="5" rx="2.5" transform="rotate(-24.3 120.4 176.3)" fill="#16304f" stroke="none"/><rect x="136.2" y="162.6" width="18" height="5" rx="2.5" transform="rotate(-24.3 145.2 165.1)" fill="#16304f" stroke="none"/><rect x="161.0" y="151.4" width="18" height="5" rx="2.5" transform="rotate(-24.3 170.0 153.9)" fill="#16304f" stroke="none"/><ellipse cx="230.0" cy="153.9" rx="9" ry="6" transform="rotate(24.3 230.0 153.9)" fill="none" stroke-width="3"/><ellipse cx="254.8" cy="165.1" rx="9" ry="6" transform="rotate(24.3 254.8 165.1)" fill="none" stroke-width="3"/><ellipse cx="279.6" cy="176.3" rx="9" ry="6" transform="rotate(24.3 279.6 176.3)" fill="none" stroke-width="3"/><rect x="233.4" y="157.0" width="18" height="5" rx="2.5" transform="rotate(24.3 242.4 159.5)" fill="#16304f" stroke="none"/><rect x="258.2" y="168.2" width="18" height="5" rx="2.5" transform="rotate(24.3 267.2 170.7)" fill="#16304f" stroke="none"/><rect x="283.0" y="179.4" width="18" height="5" rx="2.5" transform="rotate(24.3 292.0 181.9)" fill="#16304f" stroke="none"/><path d="M44 150l34 -17.68 34 17.68 -34 17.68z" fill="#f7f0e1"/><path d="M44 150v42l34 17.68v-42z" fill="#e2552d"/><path d="M112 150v42l-34 17.68v-42z" fill="#f2c84b"/><path d="M59.3 164.7l10.2 5.303999999999999M86.5 182.38l10.2 -5.303999999999999" stroke-linecap="round" fill="none"/><path d="M166 122l34 -17.68 34 17.68 -34 17.68z" fill="#f7f0e1"/><path d="M166 122v42l34 17.68v-42z" fill="#3f9b6b"/><path d="M234 122v42l-34 17.68v-42z" fill="#f3a9b8"/><path d="M181.3 136.7l10.2 5.303999999999999M208.5 154.38l10.2 -5.303999999999999" stroke-linecap="round" fill="none"/><path d="M288 150l34 -17.68 34 17.68 -34 17.68z" fill="#f7f0e1"/><path d="M288 150v42l34 17.68v-42z" fill="#f2c84b"/><path d="M356 150v42l-34 17.68v-42z" fill="#a8d3f0"/><path d="M303.3 164.7l10.2 5.303999999999999M330.5 182.38l10.2 -5.303999999999999" stroke-linecap="round" fill="none"/><text x="78" y="153" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#16304f" stroke="none">#1</text><text x="200" y="125" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#16304f" stroke="none">#2</text><text x="322" y="153" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#16304f" stroke="none">#3</text></g>
+      <path d="M0 270c40-14 70 0 100-8s60-16 100-4 70 10 100 0 70-8 100 4v40H0z" fill="#3f9b6b" stroke="#16304f" stroke-width="3"/>
+    </svg>
+    <span class="caption">Blocks, chained</span>
+  </div>
+  <div class="panel p-b" aria-hidden="true">
+    <div class="dots" style="position:absolute;inset:0"></div>
+    <svg class="art" viewBox="0 0 700 620" preserveAspectRatio="xMidYMid slice">
+      <g stroke="#16304f" stroke-width="3" stroke-linejoin="round">
+        <rect x="70" y="60" width="330" height="200" rx="10" fill="#f7f0e1"/>
+        <path d="M70 92h330" fill="none"/><circle cx="92" cy="76" r="6" fill="#e2552d"/><circle cx="112" cy="76" r="6" fill="#f2c84b"/><circle cx="132" cy="76" r="6" fill="#3f9b6b"/>
+      </g>
+      <g font-family="DM Mono, monospace" font-size="15" fill="#16304f">
+        <text x="92" y="124"><tspan fill="#e2552d">contract</tspan> Vesting {</text>
+        <text x="110" y="150"><tspan fill="#3f9b6b">uint256</tspan> start;</text>
+        <text x="110" y="176"><tspan fill="#3f9b6b">function</tspan> release()</text>
+        <text x="128" y="202">external { ... }</text>
+        <text x="92" y="228">}</text>
+      </g>
+    </svg>
+    <div class="lower dots"></div>
+    <svg class="art" viewBox="0 0 700 620" preserveAspectRatio="xMidYMid slice">
+      <g stroke="#16304f" stroke-width="3" stroke-linejoin="round">
+        <path d="M520 380l90 34v62c0 52-38 90-90 106-52-16-90-54-90-106v-62z" fill="#f7f0e1"/>
+        <path d="M520 404l66 25v48c0 38-28 66-66 78z" fill="#e2552d"/>
+        <path d="M488 478l22 22 42-46" fill="none" stroke-width="6" stroke-linecap="round"/>
+        <path d="M80 560c30-20 60-20 90 0s60 20 90 0 60-20 90 0" fill="none" stroke="#f7f0e1" stroke-width="3"/>
+      </g>
+      <g fill="#16304f"><path d="M150 470l10-6 10 6-10 6z"/><path d="M190 446l8-5 8 5-8 5z"/></g>
+    </svg>
+    <div class="band"><span>VLASHKI</span></div>
+    <span class="caption top">Solidity · Foundry</span>
+    <span class="caption">Security first</span>
+  </div>
+  <div class="panel p-c" aria-hidden="true">
+    <span class="moon"></span><span class="star" style="left:70%;top:10%"></span><span class="star" style="left:85%;top:22%"></span><span class="star" style="left:40%;top:14%"></span><span class="star" style="left:58%;top:30%"></span><span class="star" style="left:90%;top:48%"></span><span class="star" style="left:30%;top:38%"></span><span class="star" style="left:76%;top:62%"></span>
+    <div class="signs"><span class="sign s1">SOFIA</span><span class="sign s2">CODE</span><span class="sign s3">WEB3</span><span class="sign s4">API</span></div>
+    <span class="caption">Sofia, after hours</span>
+  </div>
+</div>
+  <div class="intro">
+    <div>
+      <div class="kicker mono"><i></i>Open to full-stack &amp; blockchain roles</div>
+      <h1>Full-stack &amp; <em>blockchain</em> developer</h1>
     </div>
-
-
-    <!-- =========================
-         NAV
-    ========================== -->
-
-    <nav class="nav">
-
-        <a href="#home" class="nav-logo">
-            <span>NV</span>
-        </a>
-
-        <div class="nav-links">
-            <a href="#about">ABOUT</a>
-            <a href="#experience">EXPERIENCE</a>
-            <a href="#projects">PROJECTS</a>
-            <a href="#skills">SKILLS</a>
-        </div>
-
-        <a href="#contact" class="nav-contact">
-            CONTACT <span>↗</span>
-        </a>
-
-    </nav>
-
-
-    <main>
-
-
-        <!-- =========================
-             HERO
-        ========================== -->
-
-        <section id="home" class="hero container">
-
-            <div class="hero-left">
-
-                <div class="status">
-                    <span class="status-dot"></span>
-                    AVAILABLE FOR OPPORTUNITIES
-                </div>
-
-                <div class="hero-eyebrow">
-                    RISK OPERATIONS / BLOCKCHAIN / FINTECH
-                </div>
-
-                <h1>
-                    NIKOLAY
-                    <span>VLASHKI</span>
-                </h1>
-
-                <div class="hero-title">
-                    Blockchain & Full-Stack Developer
-                    <b>|</b>
-                    Smart Contracts & Decentralized Applications
-                </div>
-
-                <p class="hero-description">
-                    Building decentralized solutions and modern web applications
-                    with a focus on blockchain technology and secure coding practices.
-                </p>
-
-                <div class="hero-actions">
-
-                    <a href="#experience" class="btn btn-primary">
-                        VIEW EXPERIENCE
-                        <span>↓</span>
-                    </a>
-
-                    <a href="#projects" class="btn btn-outline">
-                        EXPLORE PROJECTS
-                        <span>↗</span>
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <div class="hero-terminal">
-
-                <div class="terminal-header">
-
-                    <div class="terminal-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-
-                    <span>
-                        risk_profile.exe
-                    </span>
-
-                    <span>
-                        ONLINE
-                    </span>
-
-                </div>
-
-                <div class="terminal-body">
-
-                    <div class="terminal-line">
-                        <span class="terminal-green">root@risk-node</span>
-                        <span>:</span>
-                        <span class="terminal-blue">~</span>
-                        <span>$ ./profile</span>
-                    </div>
-
-                    <br>
-
-                    <div class="terminal-row">
-                        <span>ROLE</span>
-                        <strong>OPERATIONAL RISK ANALYST</strong>
-                    </div>
-
-                    <div class="terminal-row">
-                        <span>COMPANY</span>
-                        <strong>FORIS EUROPE</strong>
-                    </div>
-
-                    <div class="terminal-row">
-                        <span>LOCATION</span>
-                        <strong>SOFIA, BG</strong>
-                    </div>
-
-                    <div class="terminal-row">
-                        <span>EXPERIENCE</span>
-                        <strong>2+ YEARS</strong>
-                    </div>
-
-                    <div class="terminal-row">
-                        <span>NETWORKS</span>
-                        <strong>ETH / ARB / BASE / OP</strong>
-                    </div>
-
-                    <div class="terminal-row">
-                        <span>FOCUS</span>
-                        <strong>AML / FRAUD / KYT</strong>
-                    </div>
-
-                    <br>
-
-                    <div class="terminal-line">
-                        <span class="terminal-green">root@risk-node</span>
-                        <span>:</span>
-                        <span class="terminal-blue">~</span>
-                        <span>$ status</span>
-                    </div>
-
-                    <div class="terminal-status">
-                        <span class="pulse"></span>
-                        MONITORING TRANSACTION FLOWS...
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             ABOUT
-        ========================== -->
-
-        <section id="about" class="section container">
-
-            <div class="section-label">
-                <span>01</span>
-                ABOUT / PROFILE
-            </div>
-
-            <div class="section-grid">
-
-                <div class="section-title">
-                    <h2>
-                        Risk is not<br>
-                        <span>just a number.</span>
-                    </h2>
-                </div>
-
-                <div class="about-copy">
-
-                    <p class="large-copy">
-                        Risk Operations professional with 2+ years at
-                        <strong>Foris Europe</strong>, directly monitoring
-                        and investigating cryptocurrency transactions
-                        at scale across card and crypto payment rails.
-                    </p>
-
-                    <div class="about-columns">
-
-                        <p>
-                            Daily practitioner of KYT, Alterya,
-                            Chainalysis Reactor, TRM Labs and Arkham
-                            for real-time fraud detection, AML compliance
-                            and OFAC sanctions screening.
-                        </p>
-
-                        <p>
-                            Hands-on experience with Stripe and Checkout
-                            for payment operations, merchant risk reviews
-                            and transaction monitoring.
-                        </p>
-
-                    </div>
-
-                    <div class="tech-strip">
-
-                        <span>KYT</span>
-                        <span>AML</span>
-                        <span>OFAC</span>
-                        <span>ON-CHAIN</span>
-                        <span>FRAUD</span>
-                        <span>DEFI</span>
-                        <span>WEB3</span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             EXPERIENCE
-        ========================== -->
-
-        <section id="experience" class="section container">
-
-            <div class="section-label">
-                <span>02</span>
-                EXPERIENCE / CAREER
-            </div>
-
-            <div class="experience-list">
-
-
-                <!-- EXPERIENCE 1 -->
-
-                <article class="experience-card active">
-
-                    <div class="experience-index">
-                        01
-                    </div>
-
-                    <div class="experience-main">
-
-                        <div class="experience-top">
-
-                            <div>
-
-                                <div class="experience-role">
-                                    Operational Risk Analyst
-                                </div>
-
-                                <div class="experience-company">
-                                    FORIS EUROPE
-                                </div>
-
-                            </div>
-
-                            <div class="experience-meta">
-
-                                <span>
-                                    08/2025 — PRESENT
-                                </span>
-
-                                <span>
-                                    SOFIA, BULGARIA
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                        <ul>
-
-                            <li>
-                                Conducted daily on-chain investigations
-                                across EVM networks — tracing fund flows
-                                through DeFi protocols, bridges and mixers
-                                using Chainalysis Reactor and TRM Labs.
-                            </li>
-
-                            <li>
-                                Operated Arkham Intelligence for on-chain
-                                threat actor tracking; applied KYT and
-                                Alterya for AI-powered real-time fraud
-                                detection across crypto transaction flows.
-                            </li>
-
-                            <li>
-                                Performed OFAC SDN sanctions screening and
-                                multi-hop wallet tracing to detect indirect
-                                exposure.
-                            </li>
-
-                            <li>
-                                Analyzed raw EVM calldata, event logs and
-                                trace data to reconstruct suspicious
-                                activity sequences.
-                            </li>
-
-                        </ul>
-
-                        <div class="experience-tools">
-
-                            <span>CHAINALYSIS</span>
-                            <span>TRM LABS</span>
-                            <span>ARKHAM</span>
-                            <span>ALTERYA</span>
-                            <span>KYT</span>
-                            <span>OFAC</span>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- EXPERIENCE 2 -->
-
-                <article class="experience-card">
-
-                    <div class="experience-index">
-                        02
-                    </div>
-
-                    <div class="experience-main">
-
-                        <div class="experience-top">
-
-                            <div>
-
-                                <div class="experience-role">
-                                    Senior Customer Service Representative
-                                </div>
-
-                                <div class="experience-company">
-                                    FORIS EUROPE
-                                </div>
-
-                            </div>
-
-                            <div class="experience-meta">
-
-                                <span>
-                                    03/2025 — 08/2025
-                                </span>
-
-                                <span>
-                                    SOFIA, BULGARIA
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                        <ul>
-
-                            <li>
-                                Primary escalation handler for complex
-                                crypto transaction disputes and
-                                compliance-sensitive cases.
-                            </li>
-
-                            <li>
-                                Surfaced fraud signals from customer
-                                interactions directly into investigation
-                                pipelines.
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                </article>
-
-
-                <!-- EXPERIENCE 3 -->
-
-                <article class="experience-card">
-
-                    <div class="experience-index">
-                        03
-                    </div>
-
-                    <div class="experience-main">
-
-                        <div class="experience-top">
-
-                            <div>
-
-                                <div class="experience-role">
-                                    Customer Support Representative
-                                </div>
-
-                                <div class="experience-company">
-                                    FORIS EUROPE
-                                </div>
-
-                            </div>
-
-                            <div class="experience-meta">
-
-                                <span>
-                                    03/2024 — 03/2025
-                                </span>
-
-                                <span>
-                                    SOFIA
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                        <ul>
-
-                            <li>
-                                Handled high-volume crypto transaction and
-                                account inquiries while identifying and
-                                escalating suspicious customer behaviour.
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             PROJECTS
-        ========================== -->
-
-        <section id="projects" class="section container">
-
-            <div class="section-label">
-                <span>03</span>
-                PROJECTS / BUILDING
-            </div>
-
-
-            <div class="projects-grid">
-
-
-                <!-- ARGUS -->
-
-                <article class="argus-card">
-
-                    <div class="project-header">
-
-                        <div class="project-number">
-                            PROJECT_02
-                        </div>
-
-                        <div class="project-status">
-                            <span></span>
-                            ACTIVE DEVELOPMENT
-                        </div>
-
-                    </div>
-
-                    <div class="argus-content">
-
-                        <div class="argus-title">
-
-                            <div class="argus-symbol">
-                                A
-                            </div>
-
-                            <div>
-
-                                <div class="project-kicker">
-                                    DEFI RISK INTELLIGENCE
-                                </div>
-
-                                <h3>
-                                    ARGUS
-                                </h3>
-
-                                <p>
-                                    Multi-chain risk intelligence API
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="argus-stats">
-
-                            <div>
-                                <strong>17</strong>
-                                <span>RISK DIMENSIONS</span>
-                            </div>
-
-                            <div>
-                                <strong>6</strong>
-                                <span>RISK CATEGORIES</span>
-                            </div>
-
-                            <div>
-                                <strong>5</strong>
-                                <span>BLOCKCHAINS</span>
-                            </div>
-
-                        </div>
-
-
-                        <p class="project-description">
-
-                            Architected a multi-chain risk platform covering
-                            smart contract, liquidity, governance, market,
-                            operational and security dimensions.
-
-                        </p>
-
-                        <p class="project-description">
-
-                            Built a wallet-hop sanctions tracer performing
-                            multi-depth graph traversal to surface indirect
-                            OFAC SDN exposure. AI narrative layer generates
-                            automated risk summaries.
-
-                        </p>
-
-
-                        <div class="project-integrations">
-
-                            <span>DEFI LLAMA</span>
-                            <span>REKT.NEWS</span>
-                            <span>SOLODIT</span>
-                            <span>SOLIDITYSCAN</span>
-                            <span>OFAC SDN</span>
-                            <span>CLAUDE SONNET</span>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- AUTOMATION -->
-
-                <article class="automation-card">
-
-                    <div class="project-number">
-                        PROJECT_01
-                    </div>
-
-                    <div class="automation-icon">
-                        &gt;_
-                    </div>
-
-                    <div class="project-kicker">
-                        RISK PROCESS AUTOMATION
-                    </div>
-
-                    <h3>
-                        Investigation<br>
-                        Automation
-                    </h3>
-
-                    <p>
-                        Built scripts automating repetitive investigation
-                        steps through external API pipelines — reducing
-                        per-case overhead and increasing team capacity.
-                    </p>
-
-                    <div class="automation-line"></div>
-
-                    <div class="automation-stack">
-                        <span>API</span>
-                        <span>AUTOMATION</span>
-                        <span>RISK OPS</span>
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-<!-- =========================
-     SKILLS
-========================== -->
-
-<section id="skills" class="section container">
-
-    <div class="section-label">
-        <span>04</span>
-        SKILLS / TOOLBOX
+    <div>
+      <p class="lead">I build web applications and smart contract tooling for the on-chain economy, shaped by 2+ years investigating crypto fraud, AML and sanctions risk at scale.</p>
+      <div class="ctas">
+        <a href="#argus" class="btn btn-orange">View my work <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a href="#contact" class="btn btn-paper">Get in touch</a>
+      </div>
     </div>
-
-    <div class="skills-intro">
-
-        <div>
-            <div class="skills-eyebrow">
-                CURRENT STACK
-            </div>
-
-            <h2>
-                Building across
-                <span>code & blockchain.</span>
-            </h2>
-        </div>
-
-        <p>
-            Combining full-stack development, blockchain
-            infrastructure and real-world risk operations
-            to build practical products.
-        </p>
-
-    </div>
-
-
-    <div class="skills-grid">
-
-
-        <!-- FULL STACK -->
-
-        <article class="skill-card skill-main">
-
-            <div class="skill-top">
-
-                <span class="skill-number">
-                    01
-                </span>
-
-                <span class="skill-arrow">
-                    ↗
-                </span>
-
-            </div>
-
-            <div class="skill-content">
-
-                <div class="skill-icon">
-                    &lt;/&gt;
-                </div>
-
-                <div class="skill-category">
-                    DEVELOPMENT
-                </div>
-
-                <h3>
-                    Full-Stack
-                    <span>Development</span>
-                </h3>
-
-                <p>
-                    Building modern web applications from
-                    interface to backend, APIs and data.
-                </p>
-
-                <div class="skill-tags">
-
-                    <span>HTML</span>
-                    <span>CSS</span>
-                    <span>JavaScript</span>
-                    <span>Front-End</span>
-                    <span>Back-End</span>
-                    <span>REST APIs</span>
-                    <span>Databases</span>
-
-                </div>
-
-            </div>
-
-            <div class="skill-progress">
-
-                <span>LEARNING / BUILDING</span>
-
-                <div>
-                    <i></i>
-                </div>
-
-            </div>
-
-        </article>
-
-
-        <!-- BLOCKCHAIN -->
-
-        <article class="skill-card">
-
-            <div class="skill-top">
-
-                <span class="skill-number">
-                    02
-                </span>
-
-                <span class="skill-arrow">
-                    ↗
-                </span>
-
-            </div>
-
-            <div class="skill-content">
-
-                <div class="skill-icon">
-                    ⛓
-                </div>
-
-                <div class="skill-category">
-                    WEB3 / INFRASTRUCTURE
-                </div>
-
-                <h3>
-                    Blockchain
-                    <span>& Web3</span>
-                </h3>
-
-                <p>
-                    On-chain investigation, EVM analysis,
-                    DeFi mechanics and smart contract tooling.
-                </p>
-
-                <div class="skill-tags">
-
-                    <span>Ethereum</span>
-                    <span>Arbitrum</span>
-                    <span>Base</span>
-                    <span>Optimism</span>
-                    <span>Solana</span>
-                    <span>EVM</span>
-                    <span>DeFi</span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-        <!-- RISK -->
-
-        <article class="skill-card">
-
-            <div class="skill-top">
-
-                <span class="skill-number">
-                    03
-                </span>
-
-                <span class="skill-arrow">
-                    ↗
-                </span>
-
-            </div>
-
-            <div class="skill-content">
-
-                <div class="skill-icon">
-                    ◈
-                </div>
-
-                <div class="skill-category">
-                    OPERATIONS
-                </div>
-
-                <h3>
-                    Risk
-                    <span>& Fraud</span>
-                </h3>
-
-                <p>
-                    Transaction monitoring, fraud detection
-                    and blockchain investigations at scale.
-                </p>
-
-                <div class="skill-tags">
-
-                    <span>KYT</span>
-                    <span>Chainalysis</span>
-                    <span>TRM Labs</span>
-                    <span>Alterya</span>
-                    <span>Arkham</span>
-                    <span>Fraud Detection</span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-        <!-- TOOLS -->
-
-        <article class="skill-card">
-
-            <div class="skill-top">
-
-                <span class="skill-number">
-                    04
-                </span>
-
-                <span class="skill-arrow">
-                    ↗
-                </span>
-
-            </div>
-
-            <div class="skill-content">
-
-                <div class="skill-icon">
-                    &gt;_
-                </div>
-
-                <div class="skill-category">
-                    ENGINEERING
-                </div>
-
-                <h3>
-                    Tools
-                    <span>& Automation</span>
-                </h3>
-
-                <p>
-                    Developer tooling, smart contracts and
-                    automation pipelines for risk operations.
-                </p>
-
-                <div class="skill-tags">
-
-                    <span>Solidity</span>
-                    <span>Foundry</span>
-                    <span>Forge</span>
-                    <span>Cast</span>
-                    <span>APIs</span>
-                    <span>Automation</span>
-                    <span>Git</span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    </div>
-
+  </div>
 </section>
 
+<div class="strip" aria-label="Tech stack"><div class="track">
+  <span>Solidity</span><span>Foundry</span><span>JavaScript</span><span>REST APIs</span><span>Ethereum</span><span>Arbitrum</span><span>Base</span><span>Optimism</span><span>Solana</span><span>Git</span>
+  <span>Solidity</span><span>Foundry</span><span>JavaScript</span><span>REST APIs</span><span>Ethereum</span><span>Arbitrum</span><span>Base</span><span>Optimism</span><span>Solana</span><span>Git</span>
+</div></div>
 
-<!-- =========================
-     EDUCATION
-========================== -->
-
-<section class="section container">
-
-    <div class="section-label">
-        <span>05</span>
-        EDUCATION / LEARNING
+<section class="frame sec" id="about">
+  <div class="sheet">
+    <div class="head">
+      <div><span class="tag mono">About</span><h2>Engineering with a <em>risk analyst's</em> eye</h2></div>
+      <p class="sub">My background is on the defensive side of crypto: tracing funds, screening sanctions exposure and reconstructing suspicious activity from raw EVM data. Now I build the software, secure by default and informed by how systems actually get abused.</p>
     </div>
-
-    <div class="education-grid">
-
-        <!-- CYFRIN -->
-
-        <article class="education-card">
-
-            <div class="education-number">
-                01
-            </div>
-
-            <div class="education-content">
-
-                <div class="education-kicker">
-                    BLOCKCHAIN / WEB3 SECURITY
-                </div>
-
-                <h3>
-                    Blockchain Development & Web3 Security
-                </h3>
-
-                <p class="education-provider">
-                    Cyfrin
-                </p>
-
-                <div class="education-date">
-                    12/2024 — 01/2025
-                </div>
-
-            </div>
-
-            <div class="education-status completed">
-                COMPLETED
-            </div>
-
-        </article>
-
-
-        <!-- META -->
-
-        <article class="education-card education-active">
-
-            <div class="education-number">
-                02
-            </div>
-
-            <div class="education-content">
-
-                <div class="education-kicker">
-                    FULL-STACK DEVELOPMENT
-                </div>
-
-                <h3>
-                    Full-Stack Development
-                </h3>
-
-                <p class="education-provider">
-                    Meta
-                </p>
-
-                <div class="education-date">
-                    IN PROGRESS
-                </div>
-
-            </div>
-
-            <div class="education-status current">
-                <span></span>
-                CURRENT
-            </div>
-
-        </article>
-
-
-        <!-- MICROSOFT -->
-
-        <article class="education-card education-active">
-
-            <div class="education-number">
-                03
-            </div>
-
-            <div class="education-content">
-
-                <div class="education-kicker">
-                    FULL-STACK DEVELOPMENT
-                </div>
-
-                <h3>
-                    Full-Stack Development
-                </h3>
-
-                <p class="education-provider">
-                    Microsoft
-                </p>
-
-                <div class="education-date">
-                    ON HOLD
-                </div>
-
-            </div>
-
-            <div class="education-status current">
-                <span></span>
-                CURRENT
-            </div>
-
-        </article>
-
+    <div class="grid3">
+      <div class="card c-sky"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16304f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div><h3>Full-stack development</h3><p>Web applications from interface to backend: HTML, CSS, JavaScript, REST APIs and databases.</p></div>
+      <div class="card c-yellow"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16304f" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/><path d="M11 7h4a2 2 0 0 1 2 2v4M13 17H9a2 2 0 0 1-2-2v-4"/></svg></div><h3>Blockchain &amp; smart contracts</h3><p>Solidity and Foundry on EVM chains, with a working understanding of Solana's architecture.</p></div>
+      <div class="card c-pink"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16304f" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4" stroke-linecap="round"/></svg></div><h3>Security-first mindset</h3><p>Daily work with fraud, AML and on-chain threats translates into safer code and better risk tooling.</p></div>
     </div>
-
+    <div class="stats">
+      <div class="card stat c-orange"><b>2+</b><span>Years in crypto risk operations</span></div>
+      <div class="card stat c-green"><b>4</b><span>EVM networks analysed</span></div>
+      <div class="card stat c-yellow"><b>17</b><span>Risk dimensions in Argus</span></div>
+      <div class="card stat c-sky"><b>5</b><span>Blockchains covered by Argus</span></div>
+    </div>
+  </div>
 </section>
 
-
-
-        <!-- =========================
-             CONTACT
-        ========================== -->
-
-        <section id="contact" class="contact-section">
-
-            <div class="container">
-
-                <div class="contact-grid">
-
-                    <div>
-
-                        <div class="section-label">
-                            <span>06</span>
-                            CONTACT / CONNECT
-                        </div>
-
-                        <h2>
-                            Let's investigate<br>
-                            <span>what's next.</span>
-                        </h2>
-
-                        <p>
-                            Open to conversations around Web3 security,
-                            blockchain intelligence, full-stack web
-                            development and risk operations in crypto
-                            and fintech.
-                        </p>
-
-                    </div>
-
-
-                    <div class="contact-links">
-
-                        <a
-                            href="mailto:nikolayvlashki@gmail.com"
-                            class="contact-row"
-                        >
-
-                            <span>EMAIL</span>
-
-                            <strong>
-                                nikolayvlashki@gmail.com
-                            </strong>
-
-                            <b>↗</b>
-
-                        </a>
-                        
-                        <a
-                            href="https://www.linkedin.com/in/nikolay-vlashki-5bb79b2b0/"
-                            target="_blank"
-                            rel="noopener"
-                            class="contact-row"
-                        >
-
-                            <span>LINKEDIN</span>
-
-                            <strong>
-                                nikolay-vlashki
-                            </strong>
-
-                            <b>↗</b>
-
-                        </a>
-
-                        <a
-                            href="https://github.com/compot13"
-                            target="_blank"
-                            rel="noopener"
-                            class="contact-row"
-                        >
-
-                            <span>GITHUB</span>
-
-                            <strong>
-                                compot13
-                            </strong>
-
-                            <b>↗</b>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer>
-
-        <span>
-            NIKOLAY VLASHKI
-        </span>
-
-        <span>
-            RISK OPERATIONS / FINTECH / CRYPTO
-        </span>
-
-        <span>
-            © 2026
-        </span>
-
-    </footer>
-
-
-    <!-- =========================
-         PARTICLES
-    ========================== -->
-
-    <script>
-
-        const canvas = document.getElementById("particles");
-        const ctx = canvas.getContext("2d");
-
-        let particles = [];
-
-        function resizeCanvas() {
-
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-        }
-
-        resizeCanvas();
-
-        window.addEventListener("resize", resizeCanvas);
-
-
-        class Particle {
-
-            constructor() {
-
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-
-                this.size = Math.random() * 1.5 + 0.3;
-
-                this.speedX =
-                    (Math.random() - 0.5) * 0.15;
-
-                this.speedY =
-                    (Math.random() - 0.5) * 0.15;
-
-                this.opacity =
-                    Math.random() * 0.6 + 0.1;
-
-            }
-
-
-            update() {
-
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
-
-            }
-
-
-            draw() {
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    this.x,
-                    this.y,
-                    this.size,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fillStyle =
-                    `rgba(80, 210, 255, ${this.opacity})`;
-
-                ctx.fill();
-
-            }
-
-        }
-
-
-        function createParticles() {
-
-            particles = [];
-
-            const count =
-                Math.min(
-                    110,
-                    Math.floor(window.innerWidth / 12)
-                );
-
-            for (let i = 0; i < count; i++) {
-
-                particles.push(
-                    new Particle()
-                );
-
-            }
-
-        }
-
-
-        function connectParticles() {
-
-            for (let a = 0; a < particles.length; a++) {
-
-                for (
-                    let b = a + 1;
-                    b < particles.length;
-                    b++
-                ) {
-
-                    const dx =
-                        particles[a].x -
-                        particles[b].x;
-
-                    const dy =
-                        particles[a].y -
-                        particles[b].y;
-
-                    const distance =
-                        Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 120) {
-
-                        const opacity =
-                            (1 - distance / 120) * 0.12;
-
-                        ctx.beginPath();
-
-                        ctx.moveTo(
-                            particles[a].x,
-                            particles[a].y
-                        );
-
-                        ctx.lineTo(
-                            particles[b].x,
-                            particles[b].y
-                        );
-
-                        ctx.strokeStyle =
-                            `rgba(50, 190, 255, ${opacity})`;
-
-                        ctx.lineWidth = 0.5;
-
-                        ctx.stroke();
-
-                    }
-
-                }
-
-            }
-
-        }
-
-
-        function animate() {
-
-            ctx.clearRect(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-            particles.forEach(
-                particle => {
-                    particle.update();
-                    particle.draw();
-                }
-            );
-
-            connectParticles();
-
-            requestAnimationFrame(animate);
-
-        }
-
-
-        createParticles();
-        animate();
-
-    </script>
-
+<section class="frame sec" id="argus" style="padding-top:0">
+  <div class="sheet alt">
+    <div class="head">
+      <div><span class="tag mono">Featured project</span><h2>Building the tools <em>risk teams</em> need</h2></div>
+      <p class="sub">A standalone DeFi risk product, in active development since November 2025.</p>
+    </div>
+    <div class="project">
+      <div>
+        <span class="status mono"><i></i>Active development</span>
+        <h3 class="name" style="margin-top:16px">ARGUS</h3>
+        <p class="mono" style="margin-top:10px">DeFi risk intelligence API</p>
+        <p style="margin-top:14px">A multi-chain risk platform that scores DeFi protocols across smart contract, liquidity, governance, market, operational and security dimensions.</p>
+        <ul class="points">
+          <li><b>1</b>17 risk dimensions across 6 categories on 5 blockchains</li>
+          <li><b>2</b>Wallet-hop sanctions tracer using multi-depth graph traversal to surface indirect OFAC SDN exposure</li>
+          <li><b>3</b>AI narrative layer that generates automated risk summaries</li>
+        </ul>
+        <div class="chips"><span class="chip">DefiLlama</span><span class="chip">Rekt.news</span><span class="chip">Solodit</span><span class="chip">SolidityScan</span><span class="chip">OFAC SDN</span><span class="chip">Claude Sonnet</span></div>
+      </div>
+      <div class="report" aria-label="Sample Argus risk report, illustrative">
+        <div class="rh mono"><span>argus / report</span><span>sample</span></div>
+        <div class="rb">
+          <div class="score"><div class="ring"><b>74</b></div><div><strong>Sample protocol</strong><div class="mono" style="margin-top:4px">Composite risk score</div></div></div>
+          <div class="dims">
+            <div class="dim"><span>Smart contract</span><span class="b"><i style="width:62%"></i></span><span>62</span></div>
+            <div class="dim"><span>Liquidity</span><span class="b"><i style="width:48%"></i></span><span>48</span></div>
+            <div class="dim"><span>Governance</span><span class="b"><i class="hi" style="width:81%"></i></span><span>81</span></div>
+            <div class="dim"><span>Market</span><span class="b"><i style="width:55%"></i></span><span>55</span></div>
+            <div class="dim"><span>Security</span><span class="b"><i class="hi" style="width:86%"></i></span><span>86</span></div>
+          </div>
+          <div class="flag">Flag: upgradeable proxy with no timelock</div>
+        </div>
+      </div>
+    </div>
+    <div class="more"><span><strong>More on GitHub.</strong> Smart contracts, experiments and work in progress.</span><a href="https://github.com/compot13" target="_blank" rel="noopener" class="btn btn-paper">github.com/compot13 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l6-6M6 5h5v5"/></svg></a></div>
+  </div>
+</section>
+
+<section class="frame sec" id="skills" style="padding-top:0">
+  <div class="sheet">
+    <div class="head">
+      <div><span class="tag mono">Skills</span><h2>Code, chains and <em>real-world</em> risk</h2></div>
+      <p class="sub">A developer toolkit backed by the platforms I used every day in production risk operations.</p>
+    </div>
+    <div class="skills">
+      <div class="card skill c-yellow"><h3>Full-stack development</h3><p>Front-end and back-end fundamentals.</p><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">REST APIs</span><span class="chip">Databases</span></div></div>
+      <div class="card skill c-sky"><h3>Smart contracts &amp; tooling</h3><p>Building and testing on EVM.</p><div class="chips"><span class="chip">Solidity</span><span class="chip">Foundry</span><span class="chip">forge</span><span class="chip">cast</span><span class="chip">anvil</span><span class="chip">Git</span></div></div>
+      <div class="card skill"><h3>Blockchain</h3><p>Calldata, logs and topics, bridge mechanics.</p><div class="chips"><span class="chip">Ethereum</span><span class="chip">Arbitrum</span><span class="chip">Base</span><span class="chip">Optimism</span><span class="chip">Solana / SVM</span></div></div>
+      <div class="card skill"><h3>Investigation platforms</h3><p>Used daily in production at Foris Europe.</p><div class="chips"><span class="chip">Chainalysis Reactor</span><span class="chip">KYT</span><span class="chip">TRM Labs</span><span class="chip">Arkham</span><span class="chip">Alterya</span></div></div>
+      <div class="card skill c-pink"><h3>Compliance</h3><p>Screening, attribution and documentation.</p><div class="chips"><span class="chip">OFAC SDN</span><span class="chip">Wallet attribution</span><span class="chip">Case documentation</span><span class="chip">Risk playbooks</span></div></div>
+      <div class="card skill"><h3>Payments risk</h3><p>User- and transaction-level risk.</p><div class="chips"><span class="chip">On/off-ramp monitoring</span><span class="chip">AML / CTF</span><span class="chip">Fraud detection</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="frame sec" id="experience" style="padding-top:0">
+  <div class="sheet alt">
+    <div class="head">
+      <div><span class="tag mono">Experience</span><h2>From support desk to <em>on-chain</em> investigations</h2></div>
+      <p class="sub">Three roles at Foris Europe in Sofia, each closer to the data.</p>
+    </div>
+    <div class="jobs">
+      <div class="job"><div class="when"><span class="mono">08/2025 — 10/2026</span></div><div class="body">
+        <h3>Operational Risk Analyst</h3><div class="co mono">Foris Europe · Sofia</div>
+        <ul><li>Ran daily on-chain investigations across EVM networks, tracing fund flows through DeFi protocols, bridges and mixers with Chainalysis Reactor and TRM Labs.</li>
+        <li>Used Arkham Intelligence for threat-actor tracking, and KYT and Alterya for AI-powered real-time fraud detection.</li>
+        <li>Performed OFAC SDN sanctions screening and multi-hop wallet tracing to detect indirect exposure.</li>
+        <li>Analysed raw EVM calldata, event logs and trace data to reconstruct suspicious activity.</li></ul></div></div>
+      <div class="job"><div class="when"><span class="mono">03/2025 — 08/2025</span></div><div class="body">
+        <h3>Senior Customer Service Representative</h3><div class="co mono">Foris Europe · Sofia</div>
+        <ul><li>Primary escalation handler for complex crypto transaction disputes and compliance-sensitive cases; surfaced fraud signals into investigation pipelines.</li></ul></div></div>
+      <div class="job"><div class="when"><span class="mono">03/2024 — 03/2025</span></div><div class="body">
+        <h3>Customer Support Representative</h3><div class="co mono">Foris Europe · Sofia</div>
+        <ul><li>High-volume crypto transaction and account inquiries; identified and escalated suspicious behaviour, contributing to early fraud detection.</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="frame sec" id="education" style="padding-top:0">
+  <div class="sheet">
+    <div class="head"><div><span class="tag mono">Education</span><h2>Always learning, <em>always</em> building</h2></div></div>
+    <div class="grid3 edu">
+      <div class="card c-green"><div class="row"><span class="mono">Cyfrin</span><span class="pill" style="color:var(--ink)">Completed</span></div><h3>Blockchain Development &amp; Web3 Security</h3><span class="mono">12/2024 — 01/2025</span></div>
+      <div class="card c-yellow"><div class="row"><span class="mono">Meta · Coursera</span><span class="pill">In progress</span></div><h3>Full-Stack Developer Specialization</h3><span class="mono">Current</span></div>
+      <div class="card"><div class="row"><span class="mono">Microsoft</span><span class="pill">On hold</span></div><h3>Full-Stack Development</h3><span class="mono">Paused</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="frame sec" id="contact" style="padding-top:0">
+  <div class="contact dots-light">
+    <span class="tag mono" style="background:var(--ink)">Contact</span>
+    <div class="big">Let's build what's next</div>
+    <p>Open to full-stack and blockchain developer roles, and to conversations about Web3 security and risk tooling.</p>
+    <div class="cc-grid">
+      <a class="cc" href="mailto:nikolayvlashki@gmail.com"><div><span class="mono">Email</span><strong>nikolayvlashki@gmail.com</strong></div><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l6-6M6 5h5v5"/></svg></a>
+      <a class="cc" href="https://www.linkedin.com/in/nikolay-vlashki-5bb79b2b0/" target="_blank" rel="noopener"><div><span class="mono">LinkedIn</span><strong>nikolay-vlashki</strong></div><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l6-6M6 5h5v5"/></svg></a>
+      <a class="cc" href="https://github.com/compot13" target="_blank" rel="noopener"><div><span class="mono">GitHub</span><strong>compot13</strong></div><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l6-6M6 5h5v5"/></svg></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="frame">
+  <div class="foot">
+    <span class="mono">© 2026 Nikolay Vlashki · Sofia</span>
+    <nav aria-label="Footer"><a href="#about">About</a><a href="#argus">Projects</a><a href="#experience">Experience</a><a href="https://github.com/compot13" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/nikolay-vlashki-5bb79b2b0/" target="_blank" rel="noopener">LinkedIn</a></nav>
+  </div>
+</footer>
+
+<script>
+const btn=document.getElementById('menuBtn');
+const setMenu=o=>{document.body.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);btn.setAttribute('aria-label',o?'Close menu':'Open menu')};
+btn.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
+document.querySelectorAll('#drawer a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+addEventListener('resize',()=>{if(innerWidth>1060)setMenu(false)});
+</script>
 </body>
 </html>
